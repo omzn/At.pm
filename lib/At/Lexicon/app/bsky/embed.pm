@@ -3,7 +3,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
     no warnings 'experimental::class', 'experimental::builtin';    # Be quiet.
     use feature 'class';
     use Carp;
-    use Path::Tiny;
+    use Path::Tiny qw(path);
 
     class At::Lexicon::app::bsky::embed::recordWithMedia {
         field $type : param($type) //= ();    # record field
@@ -63,7 +63,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $alt : param;                   # string, required
         field $aspectRatio : param //= ();    # ::aspectRatio
         ADJUST {
-            $image = path($image)->slurp_utf8                if -f $image;
+            $image = path($image)->slurp_raw                if defined $image && -f $image;
             Carp::confess 'image is more than 1000000 bytes' if length $image > 1000000;
             $aspectRatio = At::Lexicon::app::bsky::embed::images::aspectRatio->new(%$aspectRatio)
                 if defined $aspectRatio && !builtin::blessed $aspectRatio;
@@ -160,7 +160,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $url : param //= ();            # URI
         ADJUST {
             $uri   = URI->new($uri) unless builtin::blessed $uri;
-            $thumb = path($thumb)->slurp_utf8 if defined $thumb && -f $thumb;
+            $thumb = path($thumb)->slurp_raw  if defined $thumb && -f $thumb;
             Carp::confess 'thumb is more than 1000000 bytes' if defined $thumb && length $thumb > 1000000;
         }
 
