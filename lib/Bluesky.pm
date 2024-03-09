@@ -50,7 +50,7 @@ package Bluesky 0.18 {
         method post (%args) {
             $args{createdAt} //= At::_now();
             my $repo = delete $args{repo} // $self->session->{did};
-            Carp::confess 'text must be fewer than 300 characters' if length $args{text} > 300 || bytes::length $args{text} > 300;
+            Carp::confess 'text must be fewer than 300 characters' if length $args{text} > 300 ; #|| bytes::length $args{text} > 300;
             my $record = At::Lexicon::app::bsky::feed::post->new( '$type' => 'app.bsky.feed.post', %args );
             $self->repo_createRecord( repo => $repo, collection => 'app.bsky.feed.post', record => $record );
         }
