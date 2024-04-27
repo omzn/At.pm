@@ -1064,6 +1064,7 @@ package At 0.18 {
             field $didDoc : param         = ();    # spec says 'unknown' so I'm just gonna ignore it for now even with the dump
             field $email : param          = ();
             field $emailConfirmed : param = ();
+            field $emailAuthFactor : param = ();
             field $handle : param         = ();
             field $refreshJwt : param;
 
