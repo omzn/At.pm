@@ -285,6 +285,9 @@ package At::Lexicon::app::bsky::actor 0.18 {
                 cid     => $cid,
                 author  => $author->_raw,
                 value   => builtin::blessed $value ? $value->_raw : $value,
+                likeCount => \$likeCount,
+                repostCount => \$repostCount,
+                replyCount => \$replyCount,
                 defined $labels ? ( labels => [ map { $_ = $_->_raw if builtin::blessed $_; } @$labels ] ) : (),
                 defined $embeds ? ( embeds => [ map { $_ = $_->_raw if builtin::blessed $_; } @$embeds ] ) : (), indexedAt => $indexedAt->_raw
             };

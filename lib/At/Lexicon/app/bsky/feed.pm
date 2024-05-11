@@ -107,6 +107,7 @@ package At::Lexicon::app::bsky::feed 0.18 {
     class At::Lexicon::app::bsky::feed::replyRef {
         field $root : param;      # union, required
         field $parent : param;    # union, required
+        field $grandparentAuthor : param //=();
         ADJUST {
             $root   = At::_topkg( $root->{'$type'} )->new(%$root)     if !builtin::blessed $root   && defined $root->{'$type'};
             $parent = At::_topkg( $parent->{'$type'} )->new(%$parent) if !builtin::blessed $parent && defined $parent->{'$type'};
