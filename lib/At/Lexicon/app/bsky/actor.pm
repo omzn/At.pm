@@ -13,6 +13,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $avatar : param      //= ();    # string
         field $viewer : param      //= ();    # ::viewerState
         field $labels : param      //= ();    # array of com.atproto.label.defs#label
+        field $associated : param      //= ();    # 
         ADJUST {
             $did    = At::Protocol::DID->new( uri => $did )      unless builtin::blessed $did;
             $handle = At::Protocol::Handle->new( id => $handle ) unless builtin::blessed $handle;
@@ -28,6 +29,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         method avatar      {$avatar}
         method viewer      {$viewer}
         method labels      {$labels}
+        method associated  {$associated}
 
         method _raw() {
             +{  did    => $did->_raw,
@@ -47,6 +49,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $indexedAt : param   //= ();    # datetime
         field $viewer : param      //= ();    # viewState
         field $labels : param      //= ();    # array of labels
+        field $associated : param      //= ();    # 
         ADJUST {
             $did    = At::Protocol::DID->new( uri => $did ) if defined $did && !builtin::blessed $did;
             $handle = At::Protocol::Handle->new( id => $handle ) unless builtin::blessed $handle;
@@ -66,6 +69,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         method indexedAt   {$indexedAt}
         method viewer      {$viewer}
         method labels      {$labels}
+        method associated  {$associated}
 
         method _raw() {
             +{  did    => $did->_raw,
