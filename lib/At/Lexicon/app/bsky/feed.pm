@@ -65,6 +65,7 @@ package At::Lexicon::app::bsky::feed 0.18 {
         field $repost : param        //= ();    # URI
         field $like : param          //= ();    # URI
         field $replyDisabled : param //= ();    # bool
+        field $threadMuted : param   //= ();
         ADJUST {
             $repost        = URI->new($repost) if defined $repost        && !builtin::blessed $repost;
             $like          = URI->new($like)   if defined $like          && !builtin::blessed $like;
@@ -235,6 +236,7 @@ package At::Lexicon::app::bsky::feed 0.18 {
         field $likeCount : param         //= ();    # int, min: 0
         field $viewer : param            //= ();    # ::generatorViewerState
         field $indexedAt : param;                   # datetime, required
+        field $labels : param            //=();
         ADJUST {
             $uri     = URI->new($uri)                                             unless builtin::blessed $uri;
             $did     = At::Protocol::DID->new( uri => $did )                      unless builtin::blessed $did;

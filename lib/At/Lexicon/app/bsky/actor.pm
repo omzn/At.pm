@@ -14,6 +14,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $viewer : param      //= ();    # ::viewerState
         field $labels : param      //= ();    # array of com.atproto.label.defs#label
         field $associated : param      //= ();    # 
+        field $createdAt  : param      //= ();
         ADJUST {
             $did    = At::Protocol::DID->new( uri => $did )      unless builtin::blessed $did;
             $handle = At::Protocol::Handle->new( id => $handle ) unless builtin::blessed $handle;
@@ -50,6 +51,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $viewer : param      //= ();    # viewState
         field $labels : param      //= ();    # array of labels
         field $associated : param      //= ();    # 
+        field $createdAt  : param      //= ();
         ADJUST {
             $did    = At::Protocol::DID->new( uri => $did ) if defined $did && !builtin::blessed $did;
             $handle = At::Protocol::Handle->new( id => $handle ) unless builtin::blessed $handle;
@@ -95,6 +97,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $viewer : param         //= ();    # viewerState
         field $labels : param         //= ();    # array of lables
         field $associated : param     //= ();    # associated
+        field $createdAt  : param     //= ();
         ADJUST {
             $did    = At::Protocol::DID->new( uri => $did )      unless builtin::blessed $did;
             $handle = At::Protocol::Handle->new( id => $handle ) unless builtin::blessed $handle;
@@ -139,6 +142,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $blockingByList : param //= ();    # app.bsky.graph.defs#listViewBasic
         field $following : param      //= ();    # at-uri
         field $followedBy : param     //= ();    # at-uri
+        field $knownFollowers : param //= ();    # at-uri
         ADJUST {
             $muted       = !!$muted                                                         if defined $muted       && builtin::blessed $muted;
             $mutedByList = At::Lexicon::app::bsky::graph::listViewBasic->new(%$mutedByList) if defined $mutedByList && !builtin::blessed $mutedByList;

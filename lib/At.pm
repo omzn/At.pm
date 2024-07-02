@@ -1067,6 +1067,7 @@ package At 0.18 {
             field $emailAuthFactor : param = ();
             field $handle : param         = ();
             field $refreshJwt : param;
+            field $active : param = ();
 
             # waiting for perlclass to implement accessors with :reader
             method accessJwt  {$accessJwt}
