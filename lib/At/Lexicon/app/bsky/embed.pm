@@ -254,9 +254,10 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $labels : param //= ();    # array of com.atproto.label.defs#label
         field $embeds : param //= ();    # array of unions...
         field $indexedAt : param;        # datetime, required
-        field $repostCount : param //=();        # datetime, required
-        field $likeCount : param //=();        # datetime, required
-        field $replyCount : param //=();        # datetime, required
+        field $repostCount : param //=();        # int
+        field $likeCount : param //=();        # int
+        field $replyCount : param //=();        # int
+        field $quoteCount : param //=();        # int
         ADJUST {
             $uri    = URI->new($uri)                                                 unless builtin::blessed $uri;
             $author = At::Lexicon::app::bsky::actor::profileViewBasic->new(%$author) unless builtin::blessed $author;

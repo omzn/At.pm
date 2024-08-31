@@ -15,6 +15,7 @@ package At::Lexicon::app::bsky::feed 0.18 {
         field $replyCount : param  //= ();    # int
         field $repostCount : param //= ();    # int
         field $likeCount : param   //= ();    # int
+        field $quoteCount : param  //= (); 
         field $indexedAt : param;             # datetime, required
         field $viewer : param     //= ();     # ::viewerState
         field $labels : param     //= ();     # array of com.atproto.label
@@ -66,6 +67,7 @@ package At::Lexicon::app::bsky::feed 0.18 {
         field $like : param          //= ();    # URI
         field $replyDisabled : param //= ();    # bool
         field $threadMuted : param   //= ();
+        field $embeddingDisabled: param //= ();
         ADJUST {
             $repost        = URI->new($repost) if defined $repost        && !builtin::blessed $repost;
             $like          = URI->new($like)   if defined $like          && !builtin::blessed $like;
@@ -536,8 +538,9 @@ package At::Lexicon::app::bsky::feed 0.18 {
     class At::Lexicon::app::bsky::feed::threadgate {
         field $type : param($type) //= ();    # record field
         field $post : param;                  # At-URI, required
-        field $allow : param;                 # array, union, max 5
+        field $allow : param //=();                 # array, union, max 5
         field $createdAt : param;             # datetime, required
+        field $hiddenReplies: param //=();
         ADJUST {
             $post = URI->new($post) unless builtin::blessed $post;
             Carp::confess 'too many elements in allow' if defined $allow && scalar @$allow > 5;
