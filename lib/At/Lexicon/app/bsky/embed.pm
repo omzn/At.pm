@@ -64,7 +64,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $aspectRatio : param //= ();    # ::aspectRatio
         ADJUST {
             $image = path($image)->slurp_raw                if defined $image && -f $image;
-            Carp::confess 'image is more than 1000000 bytes' if length $image > 1000000;
+            Carp::confess 'image is more than 1000000 bytes' if defined $image && length $image > 1000000;
             $aspectRatio = At::Lexicon::app::bsky::embed::images::aspectRatio->new(%$aspectRatio)
                 if defined $aspectRatio && !builtin::blessed $aspectRatio;
         }
