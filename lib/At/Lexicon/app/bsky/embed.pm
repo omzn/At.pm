@@ -41,6 +41,63 @@ package At::Lexicon::app::bsky::actor 0.18 {
         }
     }
 
+    class At::Lexicon::app::bsky::embed::video {
+        field $type : param($type);    # record field
+        field $video : param;          # array, required, max 4
+        field $aspectRatio : param //= ();
+        field $alt : param //= ();
+        field $captions : param //= ();
+        
+        ADJUST {
+#            Carp::confess 'too many images; 4 max' if scalar @$images > 4;
+#            $images = [ map { At::Lexicon::app::bsky::embed::images::image->new(%$_) unless builtin::blessed $_ } @$images ];
+             $aspectRatio = At::Lexicon::app::bsky::embed::video::aspectRatio->new(%$aspectRatio)
+                if defined $aspectRatio && !builtin::blessed $aspectRatio;
+        }
+
+        # perlclass does not have :reader yet
+        method video {$video}
+        method aspectRatio {$aspectRatio}
+
+        method _raw() {
+            +{ '$type' => $type, video => $video };
+        }
+    }
+
+    class At::Lexicon::app::bsky::embed::video::aspectRatio {
+        field $width : param;     # int, required
+        field $height : param;    # int, required
+
+        # perlclass does not have :reader yet
+        method width  {$width}
+        method height {$height}
+
+        method _raw() {
+            +{ width => $width, height => $height };
+        }
+    }
+
+    class At::Lexicon::app::bsky::embed::video::view {
+        field $type : param($type);    # record field
+        field $video : param //=();         # array, required, max 4
+        field $cid : param //=();
+        field $alt : param //= ();
+        field $playlist: param //=();
+        field $aspectRatio: param //=();
+        field $thumbnail: param //=();
+        ADJUST {
+#            Carp::confess 'too many images; 4 max' if scalar @$images > 4;
+#            $images = [ map { At::Lexicon::app::bsky::embed::images::viewImage->new(%$_) unless builtin::blessed $_ } @$images ];
+        }
+
+        # perlclass does not have :reader yet
+        method video {$video}
+
+        method _raw() {
+            +{ '$type' => $type, video => $video  };
+        }
+    }
+
     class At::Lexicon::app::bsky::embed::images {
         field $type : param($type);    # record field
         field $images : param;         # array, required, max 4
