@@ -98,6 +98,7 @@ package At::Lexicon::app::bsky::actor 0.18 {
         field $labels : param         //= ();    # array of lables
         field $associated : param     //= ();    # associated
         field $createdAt  : param     //= ();
+        field $pinnedPost : param     //= ();
         ADJUST {
             $did    = At::Protocol::DID->new( uri => $did )      unless builtin::blessed $did;
             $handle = At::Protocol::Handle->new( id => $handle ) unless builtin::blessed $handle;
