@@ -120,7 +120,17 @@ package At::Bluesky {
                     }
                 }
             );
-            $res->{feed} = [ map { At::Lexicon::app::bsky::feed::feedViewPost->new(%$_) } @{ $res->{feed} } ] if defined $res->{feed};
+#            $res->{feed} = [ map { At::Lexicon::app::bsky::feed::feedViewPost->new(%$_) } @{ $res->{feed} } ] if defined $res->{feed};
+            if (defined $res->{feed} ) {
+                my @feeds = ();
+                foreach (@{ $res->{feed} }) {
+                    eval {push(@feeds,At::Lexicon::app::bsky::feed::feedViewPost->new(%$_))};
+                    if ($@) {
+                        Carp::carp "got invalid feed, skipping.";
+                    }
+                }
+                @{$res->{feed}} = @feeds;
+            }
             $res;
         }
 
