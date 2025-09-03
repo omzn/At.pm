@@ -16,6 +16,7 @@ package At::Lexicon::app::bsky::feed 0.18 {
         field $repostCount : param //= ();    # int
         field $likeCount : param   //= ();    # int
         field $quoteCount : param  //= (); 
+        field $bookmarkCount : param //= ();    # int
         field $indexedAt : param;             # datetime, required
         field $viewer : param     //= ();     # ::viewerState
         field $labels : param     //= ();     # array of com.atproto.label
@@ -68,6 +69,7 @@ package At::Lexicon::app::bsky::feed 0.18 {
         field $replyDisabled : param //= ();    # bool
         field $threadMuted : param   //= ();
         field $embeddingDisabled: param //= ();
+        field $bookmarked : param //= ();
         ADJUST {
             $repost        = URI->new($repost) if defined $repost        && !builtin::blessed $repost;
             $like          = URI->new($like)   if defined $like          && !builtin::blessed $like;
@@ -91,10 +93,12 @@ package At::Lexicon::app::bsky::feed 0.18 {
         field $post : param;             # ::postView, required
         field $reply : param  //= ();    # ::replyRef
         field $reason : param //= ();    # union
+        field $bookmarked : param //= ();    # union
         ADJUST {
             $post   = At::Lexicon::app::bsky::feed::postView->new(%$post) unless builtin::blessed $post;
             $reply  = At::Lexicon::app::bsky::feed::replyRef->new(%$reply) if defined $reply && !builtin::blessed $reply;
             $reason = At::_topkg( $reason->{'$type'} )->new(%$reason) if defined $reason && !builtin::blessed $reason && defined $reason->{'$type'};
+            $bookmarked = At::_topkg( $bookmarked->{'$type'} )->new(%$bookmarked) if defined $bookmarked && !builtin::blessed $bookmarked && defined $bookmarked->{'$type'};
         }
 
         # perlclass does not have :reader yet
